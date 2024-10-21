@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Transaction</title>
+    <script>
+        // Function to show the correct form based on account type
+        function showForm(accountType) {
+            // Hide all forms initially
+            document.getElementById('bankForm').style.display = 'none';
+            document.getElementById('investmentForm').style.display = 'none';
+            document.getElementById('depositForm').style.display = 'none';
+            document.getElementById('comingSoon').style.display = 'none';
+
+            // Show relevant form based on account type
+            if (accountType === 'bank') {
+                document.getElementById('bankForm').style.display = 'block';
+            } else if (accountType === 'investment') {
+                document.getElementById('investmentForm').style.display = 'block';
+            } else if (accountType === 'deposit') {
+                document.getElementById('depositForm').style.display = 'block';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Add Transaction</h1>
+    <h3>Manual Entry</h3>
+    <!-- Account selection dropdown -->
+    <form method="POST">
+        <label for="account_id">Select Account:</label>
+        <select name="account_id" id="account_id" onchange="showForm(this.options[this.selectedIndex].dataset.type)" required>
+            <option value="" disabled selected>Select an account</option>
+            {% for account in accounts %}
+                <option value="{{ account[0] }}" data-type="{{ account[2] }}">{{ account[1] }} ({{ account[2] }})</option>
+            {% endfor %}
+        </select>
+
+        <!-- Bank transaction form -->
+        <div id="bankForm" style="display:none;">
+            <h2>Bank Transaction</h2>
+
+            <label for="transaction_date">Transaction Date:</label>
+            <input type="date" name="transaction_date" id="transaction_date" required>
+
+            <label for="description">Description:</label>
+            <input type="text" name="description" id="description" required>
+
+            <label for="debit">Debit:</label>
+            <input type="number" name="debit" id="debit">
+
+            <label for="credit">Credit:</label>
+            <input type="number" name="credit" id="credit">
+
+            <button type="submit">Add Transaction</button>
+        </div>
+
+        <!-- Investment transaction placeholder -->
+        <div id="investmentForm" style="display:none;">
+            <h2>Investment Transaction</h2>
+            <p>Coming soon!</p>
+        </div>
+
+        <!-- Deposit transaction placeholder -->
+        <div id="depositForm" style="display:none;">
+            <h2>Deposit Transaction</h2>
+            <p>Coming soon!</p>
+        </div>
+
+        <!-- Coming soon message for unsupported forms -->
+        <div id="comingSoon" style="display:none;">
+            <h2>Coming Soon!</h2>
+            <p>Transactions for investment and deposit accounts are not yet available.</p>
+        </div>
+    </form>
+
+    <h3>Import CSV</h3>
+    <!-- Add the Import CSV section -->
+    <div>
+        <p>Upload your CSV file for bank transactions:</p>
+        <!-- CSV Upload Form -->
+        <form method="POST" action="{{ url_for('upload_csv') }}" enctype="multipart/form-data">
+            <label for="account_id_upload">Select Account:</label>
+            <select name="account_id_upload" id="account_id_upload" required>
+                <option value="" disabled selected>Select an account</option>
+                {% for account in accounts %}
+                    <option value="{{ account[0] }}">{{ account[1] }} ({{ account[2] }})</option>
+                {% endfor %}
+            </select>
+            <input type="file" name="csv_file" accept=".csv" required>
+            <button type="submit">Upload CSV</button>
+        </form>
+        <p>Note: CSV columns should be transaction_date, description, debit, credit.</p>
+    </div>
+
+    <a href="{{ url_for('index') }}"><button>Back</button></a>
+</body>
+</html>

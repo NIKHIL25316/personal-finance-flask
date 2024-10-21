@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h2>Dashboard</h2>
+
+    <!-- Display accounts added by the user -->
+    <h3>Your Accounts</h3>
+    <table border="1">
+        <tr>
+            <th>Type</th>
+            <th>Institution Name</th>
+        </tr>
+        {% for account in accounts %}
+        <tr>
+            <td>{{ account[0] }}</td>  <!-- Account ID -->
+            <td>{{ account[1] }}</td>  <!-- Institution Name -->
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Transaction table -->
+    <h3>Transaction Table</h3>
+    <table border="1">
+        <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Debit</th>
+            <th>Credit</th>
+            <th>Institution Name</th>
+        </tr>
+        {% for transaction in transactions %}
+        <tr>
+            <td>{{ transaction[0] }}</td>
+            <td>{{ transaction[1] }}</td>
+            <td>{{ transaction[2] }}</td>
+            <td>{{ transaction[3] }}</td>
+            <td>{{ transaction[4] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h3>Total Credit: {{ total_credit }}</h3>
+    <h3>Total Debit: {{ total_debit }}</h3>
+
+
+    
+    <!-- Back button -->
+    <button onclick="window.history.back()">Back</button>
+</body>
+</html>

@@ -8,15 +8,15 @@ import csv
 
 
 app = Flask(__name__)
-app.secret_key = 'e7e24bf3c9b43f83977e53a6f1d5c812'  # Replace with your secret key
+app.secret_key = '<secret_key>'  # Replace with your secret key
 app.config['UPLOAD_FOLDER'] = 'uploads' 
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Limit file size (optional)
 
 # MySQL Configuration
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'  # Replace with your MySQL username
-app.config['MYSQL_PASSWORD'] = 'mysql'  # Replace with your MySQL password
-app.config['MYSQL_DB'] = 'my_web_app_db'
+app.config['MYSQL_HOST'] = '<host>'
+app.config['MYSQL_USER'] = '<user>'  # Replace with your MySQL username
+app.config['MYSQL_PASSWORD'] = '<>password'  # Replace with your MySQL password
+app.config['MYSQL_DB'] = '<database>'
 mysql = MySQL(app)
 
 # Initialize Flask-Login
